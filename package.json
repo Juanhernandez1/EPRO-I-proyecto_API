@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-watch ./API/bin/www.js",
+    "start": "node API/bin/www.js",
+    "start-dev": "babel-watch ./API/bin/www.js",
     "GetModel": "sequelize-auto -o \"./model/public\" -d CitasDB -h localhost -u postgres -p 5432 -x 31539 -e postgres --cm p --cf p --cp p -s public -l esm",
-    "transpilar": "babel Backend -d API"
+    "transpilar": "babel backend -d API"
   },
   "engines": {
     "node": "14.x"
