@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 
-export default class Configuracion extends Model {
+export default class Bloqueados extends Model {
   static init(sequelize, DataTypes) {
     super.init(
       {
@@ -17,62 +17,42 @@ export default class Configuracion extends Model {
           },
           field: "uid_negocio"
         },
-        HoraInicio: {
-          type: DataTypes.STRING(255),
+        DiaInicio: {
+          type: DataTypes.DATEONLY,
           allowNull: false,
-          field: "hora_inicio"
+          field: "dia_inicio"
         },
-        HoraFin: {
-          type: DataTypes.STRING(255),
+        DiaFinal: {
+          type: DataTypes.DATEONLY,
           allowNull: false,
-          field: "hora_fin"
+          field: "dia_final"
         },
-        Csc: {
-          type: DataTypes.STRING(255),
+        Manana: {
+          type: DataTypes.BOOLEAN,
           allowNull: false,
-          field: "csc"
+          field: "mañana"
         },
-        Tec: {
-          type: DataTypes.STRING(255),
+        Tarde: {
+          type: DataTypes.BOOLEAN,
           allowNull: false,
-          field: "tec"
-        },
-        Itc: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "itc"
-        },
-        Ccd: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "ccd"
-        },
-        DiasLaborales: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "dias_laborales"
-        },
-        TiempoAlmuerzo: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tiempo_almuerzo"
+          field: "tarde"
         }
       },
       {
         sequelize,
-        tableName: "configuracion",
+        tableName: "bloqueados",
         schema: "public",
         timestamps: false,
         indexes: [
           {
-            name: "configuracion_pkey",
+            name: "bloqueados_pkey",
             unique: true,
             fields: [{ name: "uid_negocio" }]
           }
         ]
       }
     );
-    return Configuracion;
+    return Bloqueados;
   }
 
   static Setting() {

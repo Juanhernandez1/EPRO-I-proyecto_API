@@ -1,13 +1,30 @@
 import { Model } from "sequelize";
 
-export default class Configuracion extends Model {
+export default class Citas extends Model {
   static init(sequelize, DataTypes) {
     super.init(
       {
-        UidNegocio: {
+        IdCita: {
           type: DataTypes.STRING(255),
           allowNull: false,
           primaryKey: true,
+          field: "id_cita"
+        },
+        UidUsuario: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+          references: {
+            model: {
+              tableName: "usuarios",
+              schema: "public"
+            },
+            key: "uid_usuario"
+          },
+          field: "uid_usuario"
+        },
+        UidNegocio: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
           references: {
             model: {
               tableName: "negocios",
@@ -17,69 +34,39 @@ export default class Configuracion extends Model {
           },
           field: "uid_negocio"
         },
-        HoraInicio: {
-          type: DataTypes.STRING(255),
+        Fecha: {
+          type: DataTypes.DATE,
           allowNull: false,
-          field: "hora_inicio"
+          field: "fecha"
         },
-        HoraFin: {
+        Estado: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          field: "hora_fin"
-        },
-        Csc: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "csc"
-        },
-        Tec: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tec"
-        },
-        Itc: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "itc"
-        },
-        Ccd: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "ccd"
-        },
-        DiasLaborales: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "dias_laborales"
-        },
-        TiempoAlmuerzo: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tiempo_almuerzo"
+          field: "estado"
         }
       },
       {
         sequelize,
-        tableName: "configuracion",
+        tableName: "citas",
         schema: "public",
         timestamps: false,
         indexes: [
           {
-            name: "configuracion_pkey",
+            name: "citas_pkey",
             unique: true,
-            fields: [{ name: "uid_negocio" }]
+            fields: [{ name: "id_cita" }]
           }
         ]
       }
     );
-    return Configuracion;
+    return Citas;
   }
 
   static Setting() {
     // * llave primaria
     const llavepk = this.primaryKeyAttributes[0];
     // * Estado del registro
-    const campoE = this.fieldAttributeMap.tipo;
+    const campoE = this.fieldAttributeMap.estado;
     // * objetos para comparacion
     const Mapobjeto1 = { ...this.fieldAttributeMap };
     const Mapobjeto2 = { ...this.fieldAttributeMap };
@@ -107,8 +94,9 @@ export default class Configuracion extends Model {
       asocicion,
       condicion: {
         WhereLike: whereLike,
-        WhereStado: { campoE },
-        Where: whereAND
+        WhereStado: { campoE, valor: "Activo", deleteR: "Despedido" },
+        Where: whereAND,
+        PkCombinado: false
       },
       vista: null
     };

@@ -1,14 +1,14 @@
 import { DataTypes } from "sequelize";
-import _Accesos from "./public/Accesos";
-import _Bloqueados from "./public/Bloqueados";
-import _Citas from "./public/Citas";
-import _Configuracion from "./public/Configuracion";
-import _Detalle from "./public/Detalle";
-import _Direcciones from "./public/Direcciones";
-import _InfContato from "./public/InfContato";
-import _Negocios from "./public/Negocios";
-import _Servicios from "./public/Servicios";
-import _Usuarios from "./public/Usuarios";
+import _Accesos from "./Accesos";
+import _Bloqueados from "./Bloqueados";
+import _Citas from "./Citas";
+import _Configuracion from "./Configuracion";
+import _Detalle from "./Detalle";
+import _Direcciones from "./Direcciones";
+import _InfContato from "./InfContato";
+import _Negocios from "./Negocios";
+import _Servicios from "./Servicios";
+import _Usuarios from "./Usuarios";
 
 export default function initModels(sequelize) {
   const Accesos = _Accesos.init(sequelize, DataTypes);

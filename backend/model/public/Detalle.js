@@ -43,7 +43,7 @@ export default class Detalle extends Model {
     // * llave primaria
     const llavepk = this.primaryKeyAttributes[0];
     // * Estado del registro
-    const campoE = this.fieldAttributeMap.estado;
+    const campoE = this.fieldAttributeMap.tipo;
     // * objetos para comparacion
     const Mapobjeto1 = { ...this.fieldAttributeMap };
     const Mapobjeto2 = { ...this.fieldAttributeMap };
@@ -71,9 +71,8 @@ export default class Detalle extends Model {
       asocicion,
       condicion: {
         WhereLike: whereLike,
-        WhereStado: { campoE, valor: "Activo", deleteR: "Despedido" },
-        Where: whereAND,
-        PkCombinado: false
+        WhereStado: { campoE },
+        Where: whereAND
       },
       vista: null
     };

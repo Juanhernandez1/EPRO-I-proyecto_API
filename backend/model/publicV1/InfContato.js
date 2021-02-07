@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 
-export default class Configuracion extends Model {
+export default class InfContato extends Model {
   static init(sequelize, DataTypes) {
     super.init(
       {
@@ -17,69 +17,44 @@ export default class Configuracion extends Model {
           },
           field: "uid_negocio"
         },
-        HoraInicio: {
+        Telefono: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          field: "hora_inicio"
+          field: "telefono"
         },
-        HoraFin: {
-          type: DataTypes.STRING(255),
+        RedesSociales: {
+          type: DataTypes.JSONB,
           allowNull: false,
-          field: "hora_fin"
+          field: "redes_sociales"
         },
-        Csc: {
+        Email: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          field: "csc"
-        },
-        Tec: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tec"
-        },
-        Itc: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "itc"
-        },
-        Ccd: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "ccd"
-        },
-        DiasLaborales: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "dias_laborales"
-        },
-        TiempoAlmuerzo: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tiempo_almuerzo"
+          field: "email"
         }
       },
       {
         sequelize,
-        tableName: "configuracion",
+        tableName: "inf_contato",
         schema: "public",
         timestamps: false,
         indexes: [
           {
-            name: "configuracion_pkey",
+            name: "inf_contato_pkey",
             unique: true,
             fields: [{ name: "uid_negocio" }]
           }
         ]
       }
     );
-    return Configuracion;
+    return InfContato;
   }
 
   static Setting() {
     // * llave primaria
     const llavepk = this.primaryKeyAttributes[0];
     // * Estado del registro
-    const campoE = this.fieldAttributeMap.tipo;
+    const campoE = this.fieldAttributeMap.estado;
     // * objetos para comparacion
     const Mapobjeto1 = { ...this.fieldAttributeMap };
     const Mapobjeto2 = { ...this.fieldAttributeMap };
@@ -107,8 +82,9 @@ export default class Configuracion extends Model {
       asocicion,
       condicion: {
         WhereLike: whereLike,
-        WhereStado: { campoE },
-        Where: whereAND
+        WhereStado: { campoE, valor: "Activo", deleteR: "Despedido" },
+        Where: whereAND,
+        PkCombinado: false
       },
       vista: null
     };

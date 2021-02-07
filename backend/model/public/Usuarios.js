@@ -28,7 +28,14 @@ export default class Usuarios extends Model {
         Correo: {
           type: DataTypes.STRING(255),
           allowNull: false,
+          unique: "usuarios_correo_key",
           field: "correo"
+        },
+        Idfacebook: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+          unique: "usuarios_idfacebook_key",
+          field: "idfacebook"
         },
         Estado: {
           type: DataTypes.STRING(255),
@@ -42,6 +49,16 @@ export default class Usuarios extends Model {
         schema: "public",
         timestamps: false,
         indexes: [
+          {
+            name: "usuarios_correo_key",
+            unique: true,
+            fields: [{ name: "correo" }]
+          },
+          {
+            name: "usuarios_idfacebook_key",
+            unique: true,
+            fields: [{ name: "idfacebook" }]
+          },
           {
             name: "usuarios_pkey",
             unique: true,
@@ -57,7 +74,7 @@ export default class Usuarios extends Model {
     // * llave primaria
     const llavepk = this.primaryKeyAttributes[0];
     // * Estado del registro
-    const campoE = this.fieldAttributeMap.estado;
+    const campoE = this.fieldAttributeMap.tipo;
     // * objetos para comparacion
     const Mapobjeto1 = { ...this.fieldAttributeMap };
     const Mapobjeto2 = { ...this.fieldAttributeMap };
@@ -85,7 +102,7 @@ export default class Usuarios extends Model {
       asocicion,
       condicion: {
         WhereLike: whereLike,
-        WhereStado: { campoE, valor: "Activo", deleteR: "Desactivado" },
+        WhereStado: { campoE },
         Where: whereAND
       },
       vista: null

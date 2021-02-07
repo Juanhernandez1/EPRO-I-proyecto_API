@@ -1,78 +1,53 @@
 import { Model } from "sequelize";
 
-export default class Configuracion extends Model {
+export default class Accesos extends Model {
   static init(sequelize, DataTypes) {
     super.init(
       {
-        UidNegocio: {
+        UidUsuario: {
           type: DataTypes.STRING(255),
           allowNull: false,
           primaryKey: true,
           references: {
             model: {
-              tableName: "negocios",
+              tableName: "usuarios",
               schema: "public"
             },
-            key: "uid_negocio"
+            key: "uid_usuario"
           },
-          field: "uid_negocio"
+          field: "uid_usuario"
         },
-        HoraInicio: {
+        Usuario: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          field: "hora_inicio"
+          field: "usuario"
         },
-        HoraFin: {
+        Contrasena: {
           type: DataTypes.STRING(255),
           allowNull: false,
-          field: "hora_fin"
+          field: "contraseña"
         },
-        Csc: {
-          type: DataTypes.STRING(255),
+        Tipo: {
+          type: DataTypes.CHAR(1),
           allowNull: false,
-          field: "csc"
-        },
-        Tec: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tec"
-        },
-        Itc: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "itc"
-        },
-        Ccd: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "ccd"
-        },
-        DiasLaborales: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "dias_laborales"
-        },
-        TiempoAlmuerzo: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tiempo_almuerzo"
+          field: "tipo"
         }
       },
       {
         sequelize,
-        tableName: "configuracion",
+        tableName: "accesos",
         schema: "public",
         timestamps: false,
         indexes: [
           {
-            name: "configuracion_pkey",
+            name: "accesos_pkey",
             unique: true,
-            fields: [{ name: "uid_negocio" }]
+            fields: [{ name: "uid_usuario" }]
           }
         ]
       }
     );
-    return Configuracion;
+    return Accesos;
   }
 
   static Setting() {

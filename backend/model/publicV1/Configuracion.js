@@ -46,16 +46,6 @@ export default class Configuracion extends Model {
           type: DataTypes.STRING(255),
           allowNull: false,
           field: "ccd"
-        },
-        DiasLaborales: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "dias_laborales"
-        },
-        TiempoAlmuerzo: {
-          type: DataTypes.STRING(255),
-          allowNull: false,
-          field: "tiempo_almuerzo"
         }
       },
       {
@@ -79,7 +69,7 @@ export default class Configuracion extends Model {
     // * llave primaria
     const llavepk = this.primaryKeyAttributes[0];
     // * Estado del registro
-    const campoE = this.fieldAttributeMap.tipo;
+    const campoE = this.fieldAttributeMap.estado;
     // * objetos para comparacion
     const Mapobjeto1 = { ...this.fieldAttributeMap };
     const Mapobjeto2 = { ...this.fieldAttributeMap };
@@ -107,8 +97,9 @@ export default class Configuracion extends Model {
       asocicion,
       condicion: {
         WhereLike: whereLike,
-        WhereStado: { campoE },
-        Where: whereAND
+        WhereStado: { campoE, valor: "Activo", deleteR: "Despedido" },
+        Where: whereAND,
+        PkCombinado: false
       },
       vista: null
     };

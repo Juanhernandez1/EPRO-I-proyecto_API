@@ -30,6 +30,7 @@ export default class InfContato extends Model {
         Email: {
           type: DataTypes.STRING(255),
           allowNull: false,
+          unique: "inf_contato_email_key",
           field: "email"
         }
       },
@@ -39,6 +40,11 @@ export default class InfContato extends Model {
         schema: "public",
         timestamps: false,
         indexes: [
+          {
+            name: "inf_contato_email_key",
+            unique: true,
+            fields: [{ name: "email" }]
+          },
           {
             name: "inf_contato_pkey",
             unique: true,
@@ -54,7 +60,7 @@ export default class InfContato extends Model {
     // * llave primaria
     const llavepk = this.primaryKeyAttributes[0];
     // * Estado del registro
-    const campoE = this.fieldAttributeMap.estado;
+    const campoE = this.fieldAttributeMap.tipo;
     // * objetos para comparacion
     const Mapobjeto1 = { ...this.fieldAttributeMap };
     const Mapobjeto2 = { ...this.fieldAttributeMap };
@@ -82,9 +88,8 @@ export default class InfContato extends Model {
       asocicion,
       condicion: {
         WhereLike: whereLike,
-        WhereStado: { campoE, valor: "Activo", deleteR: "Despedido" },
-        Where: whereAND,
-        PkCombinado: false
+        WhereStado: { campoE },
+        Where: whereAND
       },
       vista: null
     };
